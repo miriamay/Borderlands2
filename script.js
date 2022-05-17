@@ -231,7 +231,6 @@ document.addEventListener("visibilitychange", function () {
     if (Tone.context.state !== "running") Tone.context.resume();
   });
   if (document.visibilityState === "hidden") {
-    console.log("hidden");
     demo_button.innerHTML = "START";
     document.getElementById("circle").style.background = "green";
     gainNode.gain.rampTo(0, 0.1);
