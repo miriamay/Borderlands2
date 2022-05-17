@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v60");
+console.log("v1");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -59,6 +59,7 @@ const Witches = new Tone.Player(
 const Owl = new Tone.Player(
   "https://miriamay.github.io/Borderlands/Audio/OwlNatural.mp3"
 ).connect(gainNode2);
+Tone.Transport.start();
 
 function scaleValue(value, from, to) {
   let scale = (to[1] - to[0]) / (from[1] - from[0]);
@@ -209,13 +210,13 @@ demo_button.onclick = function (e) {
     document.getElementById("start_demo").innerHTML = "STOP";
     document.getElementById("circle").style.background = "red";
     if (currentMovement === "1") {
-      Lyre.start();
+      Lyre.sync().start(0);
     }
     if (currentMovement === "3") {
-      Witches.start();
+      Witches.sync().start(0);
     }
     if (currentMovement === "4") {
-      Owl.start();
+      Owl.sync.start(0);
     }
     if (currentMovement === "5") {
       Flute.start();
@@ -234,10 +235,7 @@ document.addEventListener("visibilitychange", function () {
     demo_button.innerHTML = "START";
     document.getElementById("circle").style.background = "green";
     gainNode.gain.rampTo(0, 0.1);
-    Lyre.stop();
-    Flute.stop();
-    Witches.stop();
-    Owl.stop();
+    Tone.Transport.pause();
     is_running = false;
   }
 });
