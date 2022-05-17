@@ -2,12 +2,11 @@
 document.documentElement.addEventListener("mousedown", () => {
   if (Tone.context.state !== "running") Tone.context.resume();
 });
-
-let start = document.getElementById("start");
-let stop = document.getElementById("stop");
+let is_running = false;
+let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v1");
+console.log("v60");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -31,7 +30,10 @@ const pitchShift = new Tone.PitchShift(0).connect(reverb);
 //   release: 0.1,
 //   decayCurve: "exponential",
 // }).connect(pitchShift);
-const Lyre = new Tone.Player("https://miriamay.github.io/Borderlands/Audio/LyreNatural.mp3").connect(pitchShift);
+const Lyre = new Tone.Player({
+  url: "https://miriamay.github.io/Borderlands/Audio/LyreNatural.mp3",
+  onload: ready(),
+}).connect(pitchShift);
 const Flute = new Tone.Player({
   url: "https://miriamay.github.io/Borderlands/Audio/Flute.mp3",
   loop: true,
@@ -129,6 +131,9 @@ movement.onchange = function () {
     Owl.stop();
   }
   if (currentMovement !== "5") Flute.stop();
+  demo_button.innerHTML = "START";
+  document.getElementById("circle").style.background = "green";
+  is_running = false;
 };
 
 function handleOrientation(event) {
@@ -171,7 +176,12 @@ function handleMotion(event) {
   if (currentMovement === "5") trigger5(accel);
 }
 
-start.onclick = function (e) {
+function ready() {
+  demo_button.innerHTML = "START";
+  document.getElementById("circle").style.background = "green";
+}
+
+demo_button.onclick = function (e) {
   e.preventDefault();
 
   // Request permission for iOS 13+ devices
@@ -182,28 +192,52 @@ start.onclick = function (e) {
     DeviceMotionEvent.requestPermission();
   }
 
-  window.addEventListener("devicemotion", handleMotion);
-  window.addEventListener("deviceorientation", handleOrientation);
-  if (currentMovement === "1" && Lyre.loaded) {
-    Lyre.start();
+  if (is_running) {
+    window.removeEventListener("devicemotion", handleMotion);
+    window.removeEventListener("deviceorientation", handleOrientation);
+    demo_button.innerHTML = "START";
+    document.getElementById("circle").style.background = "green";
+    gainNode.gain.rampTo(0, 0.1);
+    Lyre.stop();
+    Flute.stop();
+    Witches.stop();
+    Owl.stop();
+    is_running = false;
+  } else {
+    window.addEventListener("devicemotion", handleMotion);
+    window.addEventListener("deviceorientation", handleOrientation);
+    document.getElementById("start_demo").innerHTML = "STOP";
+    document.getElementById("circle").style.background = "red";
+    if (currentMovement === "1") {
+      Lyre.start();
+    }
+    if (currentMovement === "3") {
+      Witches.start();
+    }
+    if (currentMovement === "4") {
+      Owl.start();
+    }
+    if (currentMovement === "5") {
+      Flute.start();
+    }
+    gainNode.gain.rampTo(1, 0.1);
+    is_running = true;
   }
-  if (currentMovement === "3" && Witches.loaded) {
-    Witches.start();
-  }
-  if (currentMovement === "4" && Owl.loaded) {
-    Owl.start();
-  }
-  if (currentMovement === "5" && Flute.loaded) {
-    Flute.start();
-  }
-}
+};
 
-stop.onclick = function (e) {
-  window.removeEventListener("devicemotion", handleMotion);
-  window.removeEventListener("deviceorientation", handleOrientation);
-  gainNode.gain.rampTo(0, 0.1);
-  Lyre.stop();
-  Flute.stop();
-  Witches.stop();
-  Owl.stop();
-}
+document.addEventListener("visibilitychange", function () {
+  document.documentElement.addEventListener("mousedown", () => {
+    if (Tone.context.state !== "running") Tone.context.resume();
+  });
+  if (document.visibilityState === "hidden") {
+    console.log("hidden");
+    demo_button.innerHTML = "START";
+    document.getElementById("circle").style.background = "green";
+    gainNode.gain.rampTo(0, 0.1);
+    Lyre.stop();
+    Flute.stop();
+    Witches.stop();
+    Owl.stop();
+    is_running = false;
+  }
+});
