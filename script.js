@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v6");
+console.log("v7");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -160,6 +160,7 @@ demo_button.onclick = function (e) {
       Owl.start();
     }
     if (currentMovement === "5") {
+      gainNode2.gain = 0;
       Flute.start();
     }
     gainNode.gain.rampTo(1, 0.1);
