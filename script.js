@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v4");
+console.log("v5");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -192,10 +192,10 @@ var myShakeEvent = new Shake({
 function shakeEventDidOccur() {
   if (currentMovement === "2") frogDict[Math.floor(Math.random() * 5)].start();
   if (currentMovement === "5") {
-    gainNode2.gain.rampTo(1, 0.1);
+    gainNode2.gain.rampTo(0.8, 0.1);
     setTimeout(function () {
       gainNode2.gain.rampTo(0, 0.5);
-    }, 1000);
+    }, 500);
   }
   //alert('shake!');
 }
