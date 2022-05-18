@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v9");
+console.log("v10");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -149,9 +149,11 @@ demo_button.onclick = function (e) {
     window.addEventListener("shake", shakeEventDidOccur, false);
     document.getElementById("start_demo").innerHTML = "STOP";
     document.getElementById("circle").style.background = "red";
-    myShakeEvent.start();
     if (currentMovement === "1") {
       Lyre.start();
+    }
+    if (currentMovement === "2") {
+      myShakeEvent.start();
     }
     if (currentMovement === "3") {
       Witches.start();
@@ -161,6 +163,7 @@ demo_button.onclick = function (e) {
     }
     if (currentMovement === "5") {
       gainNode.gain.rampTo(0, 0.1);
+      myShakeEvent.start();
       Flute.start();
     }
     gainNode.gain.rampTo(1, 0.1);
