@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v2");
+console.log("v3");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -124,7 +124,7 @@ demo_button.onclick = function (e) {
   }
 
   if (is_running) {
-    window.removeEventListener("devicemotion", handleMotion);
+    //window.removeEventListener("devicemotion", handleMotion);
     window.removeEventListener("deviceorientation", handleOrientation);
     window.removeEventListener("shake", shakeEventDidOccur, false);
     demo_button.innerHTML = "START";
@@ -137,7 +137,7 @@ demo_button.onclick = function (e) {
     Owl.stop();
     is_running = false;
   } else {
-    window.addEventListener("devicemotion", handleMotion);
+    //window.addEventListener("devicemotion", handleMotion);
     window.addEventListener("deviceorientation", handleOrientation);
     window.addEventListener("shake", shakeEventDidOccur, false);
     document.getElementById("start_demo").innerHTML = "STOP";
