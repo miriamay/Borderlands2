@@ -194,7 +194,7 @@ function shakeEventDidOccur() {
   if (currentMovement === "5") {
     gainNode2.gain.rampTo(0.8, 0.1);
     setTimeout(function () {
-      gainNode2.gain.rampTo(0, 0.5);
+      gainNode2.gain.rampTo(0, 1);
     }, 500);
   }
   //alert('shake!');
