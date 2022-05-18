@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v1");
+console.log("v2");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
