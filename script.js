@@ -151,15 +151,18 @@ demo_button.onclick = function (e) {
     document.getElementById("circle").style.background = "red";
     if (currentMovement === "1") {
       Lyre.start();
+      myShakeEvent.stop();
     }
     if (currentMovement === "2") {
       myShakeEvent.start();
     }
     if (currentMovement === "3") {
       Witches.start();
+      myShakeEvent.stop()
     }
     if (currentMovement === "4") {
       Owl.start();
+      myShakeEvent.stop();
     }
     if (currentMovement === "5") {
       gainNode.gain.rampTo(0, 0.1);
