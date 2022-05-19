@@ -6,7 +6,7 @@ let is_running = false;
 let demo_button = document.getElementById("start_demo");
 let currentMovement = "1";
 
-console.log("v10");
+console.log("v11");
 
 const gainNode = new Tone.Gain(0).toDestination();
 const gainNode2 = new Tone.Gain(0).connect(gainNode);
@@ -41,7 +41,7 @@ const Frog4 = new Tone.Player(
   "https://miriamay.github.io/Borderlands/Audio/Frog4.mp3"
 ).toDestination();
 const Witches = new Tone.Player(
-  "https://miriamay.github.io/Borderlands/Audio/Witches.mp3"
+  "https://miriamay.github.io/Borderlands/Audio/Witches2.mp3"
 ).connect(lowpass);
 const Owl = new Tone.Player(
   "https://miriamay.github.io/Borderlands/Audio/OwlNatural.mp3"
